@@ -72,6 +72,8 @@ If you’re really that desperate like your situationship? then:
 - React.js
 - Node.js
 
+<br>
+
 1. Download or clone it  
 2. Open the backend Folder  
 3. Get **~6 Mistral API keys** (use small model — they’re free).  
