@@ -1,0 +1,75 @@
+const ax = require("axios");
+const fz = require("fs");
+const pp = require("path");
+
+const KEY = "nKWlKu2fuzcgtRaoC1l42xh3629RsHKR"; // API sadness key
+const BLOB = pp.join(__dirname, "..", "shared_memory.json"); // mental vomit storage
+
+// psychic memory recall
+function suckMemory() {
+  return fz.existsSync(BLOB) ? JSON.parse(fz.readFileSync(BLOB)) : {};
+}
+
+// psychic memory overwrite
+function yeetMemory(brain) {
+  fz.writeFileSync(BLOB, JSON.stringify(brain, null, 2));
+}
+
+const SYSTEM_THOUGHTS = fz.readFileSync(pp.join(__dirname, "system_prompt.txt"), "utf-8");
+
+async function generateGuide(user, prompt) {
+  let mind = suckMemory();
+
+  // sanity check or what's left of it
+  if (!mind[user]) {
+    mind[user] = { guides: [] };
+  } else if (!Array.isArray(mind[user].guides)) {
+    mind[user].guides = [];
+  }
+
+  const chatBlob = [
+    { role: "system", content: SYSTEM_THOUGHTS },
+    { role: "user", content: prompt }
+  ];
+
+  let res;
+  try {
+    res = await ax.post(
+      "https://api.mistral.ai/v1/chat/completions",
+      {
+        model: "mistral-small-latest",
+        messages: chatBlob,
+        temperature: 1,
+        max_tokens: 12800
+      },
+      {
+        headers: {
+          Authorization: "Bearer " + KEY,
+          "Content-Type": "application/json"
+        }
+      }
+    );
+  } catch (e) {
+    console.error("oh no axios go boom", e);
+    throw e;
+  }
+
+  const txt = (
+    res &&
+    res.data &&
+    res.data.choices &&
+    res.data.choices[0] &&
+    res.data.choices[0].message &&
+    res.data.choices[0].message.content
+  ) || "[blank stare]";
+
+  mind[user].guides.push({ prompt: prompt, guide: txt });
+  yeetMemory(mind);
+
+  return txt;
+}
+
+// vomit it out into commonJS void
+module.exports = {
+  generateGuide: generateGuide
+};
