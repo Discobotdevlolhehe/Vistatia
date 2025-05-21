@@ -1,0 +1,453 @@
+import Wombat, { useState as squish, useEffect as beep, useRef as magnet } from "react";
+import Sparkle from "react-markdown";
+import glitter from "remark-gfm";
+import { Prism as Zap } from "react-syntax-highlighter";
+import { oneDark as cave, oneLight as heaven } from "react-syntax-highlighter/dist/esm/styles/prism";
+
+const peanut = [
+  { value: "directive", label: "Directive (Humane, In-depth)" },
+  { value: "assessment", label: "Assessment (Harsh, Brutal, Real)" },
+  { value: "strategy", label: "Strategy (Brutal, Realistic Geopolitics)" },
+  { value: "rebuttal", label: "Rebuttal (Harsh, Ruthless Diplomacy)" },
+  { value: "speech", label: "Speech (Bold, Analytical Factual)" },
+  { value: "poipoo", label: "POI-POO (Back up your opposition into a defensive stance)" },
+  { value: "guide", label: "Guide (Comprehensive, Detailed Background Guide)" },
+];
+
+export default function Marshmallow() {
+  const [x, setX] = squish("");
+  const [y, setY] = squish("directive");
+  const [z, setZ] = squish("");
+  const [flop, setFlop] = squish("");
+  const [glow, setGlow] = squish(false);
+  const [ouch, setOuch] = squish("");
+  const [darkSoul, setDarkSoul] = squish(false);
+  const [yoink, setYoink] = squish(false);
+  const refocus = magnet(null);
+
+  beep(() => {
+    const l = document.createElement("link");
+    l.href = "https://fonts.googleapis.com/css2?family=Merriweather&display=swap";
+    l.rel = "stylesheet";
+    document.head.appendChild(l);
+  }, []);
+
+  beep(() => {
+    document.body.style.backgroundColor = darkSoul ? "#121212" : "#fff";
+    document.body.style.color = darkSoul ? "#eee" : "#333";
+  }, [darkSoul]);
+
+  beep(() => {
+    function kazoo(e) {
+      if (e.ctrlKey && e.key === "Enter") {
+        rainbow(new Event("submit", { bubbles: true, cancelable: true }));
+      } else if (e.key === "Escape") {
+        setZ("");
+        setOuch("");
+      } else if (e.altKey && e.key.toLowerCase() === "s") {
+        setDarkSoul((d) => !d);
+      }
+    }
+    window.addEventListener("keydown", kazoo);
+    return () => window.removeEventListener("keydown", kazoo);
+  }, [z, darkSoul]);
+
+  beep(() => {
+    if (!glow && flop && refocus.current) {
+      refocus.current.focus();
+    }
+  }, [glow, flop]);
+
+  async function rainbow(e) {
+    e.preventDefault();
+    setOuch("");
+    setFlop("");
+    setYoink(false);
+    if (!x.trim()) {
+      setOuch("Seriously? Jesus Fucking Christ, I’m taking the effort to remember your sorry ass, put that damn user ID in");
+      return;
+    }
+    if (!z.trim()) {
+      setOuch("Do you really expect me to carry you to Best Delegate and that cash prize? Life’s a bitch, honey. Tell me what to do — you won’t get this opportunity with your GF in bed anyways.");
+      return;
+    }
+    setGlow(true);
+
+    try {
+      const fizz = await fetch("http://localhost:4000/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId: x, task: y, prompt: z }),
+      });
+      const splash = await fizz.json();
+      if (!fizz.ok) throw new Error(splash.error || "Gremlin in the wires.");
+      setFlop(splash.result);
+    } catch (boom) {
+      setOuch(boom.message);
+    } finally {
+      setGlow(false);
+    }
+  }
+
+  const butter = {
+    sunshine: {
+      background: "#fff",
+      text: "#333",
+      inputBg: "#fff",
+      inputBorder: "#ccc",
+      inputFocusBorder: "#007bff",
+      buttonBg: "#007bff",
+      buttonHoverBg: "#0056b3",
+      errorBg: "#fddede",
+      errorText: "#b00020",
+      responseBg: "#f7f9fc",
+      responseText: "#222",
+      copyBtnBg: "#007bff",
+      copyBtnHoverBg: "#0056b3",
+    },
+    void: {
+      background: "#121212",
+      text: "#eee",
+      inputBg: "#1e1e1e",
+      inputBorder: "#444",
+      inputFocusBorder: "#3399ff",
+      buttonBg: "#3399ff",
+      buttonHoverBg: "#007acc",
+      errorBg: "#440000",
+      errorText: "#ff6666",
+      responseBg: "#222",
+      responseText: "#eee",
+      copyBtnBg: "#3399ff",
+      copyBtnHoverBg: "#007acc",
+    },
+  };
+
+  const bubble = darkSoul ? butter.void : butter.sunshine;
+
+  const scribble = {
+    code({ node, inline, className, children, ...extras }) {
+      const sniff = /language-(\w+)/.exec(className || "");
+      return !inline && sniff ? (
+        <Zap
+          style={darkSoul ? cave : heaven}
+          language={sniff[1]}
+          PreTag="div"
+          {...extras}
+          showLineNumbers
+          wrapLongLines
+        >
+          {String(children).replace(/\n$/, "")}
+        </Zap>
+      ) : (
+        <code
+          className={className}
+          style={{
+            backgroundColor: bubble.responseBg,
+            padding: "0.2em 0.4em",
+            borderRadius: 4,
+            fontSize: "0.95em",
+            fontFamily: "monospace",
+          }}
+          {...extras}
+        >
+          {children}
+        </code>
+      );
+    },
+  };
+
+  function clickityCopy() {
+    navigator.clipboard.writeText(flop).then(() => {
+      setYoink(true);
+      setTimeout(() => setYoink(false), 2000);
+    });
+  }
+
+  return (
+      <>
+        <div
+          style={{
+            maxWidth: 700,
+            margin: "3rem auto",
+            fontFamily: "'Merriweather', 'Inter', system-ui, sans-serif",
+            padding: "2rem",
+            color: theme.text,
+            background: darkMode
+              ? "rgba(30, 30, 30, 0.9)"
+              : "rgba(255, 255, 255, 0.85)",
+            backdropFilter: "blur(10px)",
+            boxShadow: "0 8px 24px rgba(0,0,0,0.2)",
+            borderRadius: "20px",
+            transition: "all 0.4s ease",
+            position: "relative",
+            overflow: "hidden",
+          }}
+        >
+          <button
+            onClick={() => setDarkMode((d) => !d)}
+            aria-label="Toggle dark mode"
+            style={{
+              position: "absolute",
+              top: 20,
+              right: 20,
+              background: darkMode ? "#222" : "#eee",
+              border: "2px solid " + theme.text,
+              color: theme.text,
+              borderRadius: 20,
+              padding: "6px 14px",
+              cursor: "pointer",
+              fontWeight: "600",
+              fontSize: 14,
+              transition: "all 0.3s ease",
+              userSelect: "none",
+            }}
+          >
+            {darkMode ? "🌞 Light Mode" : "🌙 Dark Mode"}
+          </button>
+  
+          <h1
+            style={{
+              textAlign: "center",
+              marginBottom: "2rem",
+              fontWeight: "800",
+              fontSize: "2.6rem",
+              background: "linear-gradient(90deg, #007bff, #00c6ff)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              letterSpacing: "0.05em",
+            }}
+          >
+            MUN AI Assistant
+          </h1>
+  
+          <form onSubmit={handleSubmit} style={{ marginBottom: "2rem" }}>
+            {/* Your inputs here (userId, task, prompt) — unchanged */}
+  
+            {/* Copy pasted inputs from your original code for brevity */}
+            <label
+              style={{
+                display: "block",
+                fontWeight: "600",
+                marginBottom: "0.5rem",
+                fontSize: "1rem",
+                userSelect: "none",
+              }}
+              htmlFor="userId"
+            >
+              Your User ID (any unique string):
+            </label>
+            <input
+              id="userId"
+              type="text"
+              value={userId}
+              onChange={(e) => setUserId(e.target.value)}
+              placeholder="e.g., delegate123"
+              style={{
+                width: "100%",
+                padding: "0.6rem 1rem",
+                marginBottom: "1.5rem",
+                borderRadius: 6,
+                border: `1.5px solid ${theme.inputBorder}`,
+                background: theme.inputBg,
+                color: theme.text,
+                fontSize: "1rem",
+                outlineOffset: 2,
+                outlineColor: theme.inputFocusBorder,
+              }}
+              required
+            />
+  
+            <label
+              style={{
+                display: "block",
+                fontWeight: "600",
+                marginBottom: "0.5rem",
+                fontSize: "1rem",
+                userSelect: "none",
+              }}
+              htmlFor="task"
+            >
+              Choose your task:
+            </label>
+            <select
+              id="task"
+              value={task}
+              onChange={(e) => setTask(e.target.value)}
+              style={{
+                width: "100%",
+                padding: "0.6rem 1rem",
+                marginBottom: "1.5rem",
+                borderRadius: 6,
+                border: `1.5px solid ${theme.inputBorder}`,
+                background: theme.inputBg,
+                color: theme.text,
+                fontSize: "1rem",
+                outlineOffset: 2,
+                outlineColor: theme.inputFocusBorder,
+                cursor: "pointer",
+              }}
+            >
+              {tasks.map(({ value, label }) => (
+                <option key={value} value={value}>
+                  {label}
+                </option>
+              ))}
+            </select>
+  
+            <label
+              style={{
+                display: "block",
+                fontWeight: "600",
+                marginBottom: "0.5rem",
+                fontSize: "1rem",
+                userSelect: "none",
+              }}
+              htmlFor="prompt"
+            >
+              Your prompt:
+            </label>
+            <textarea
+              id="prompt"
+              rows={6}
+              value={prompt}
+              onChange={(e) => setPrompt(e.target.value)}
+              placeholder="Tell the AI what to do..."
+              style={{
+                width: "100%",
+                padding: "1rem",
+                marginBottom: "1.5rem",
+                borderRadius: 10,
+                border: `1.5px solid ${theme.inputBorder}`,
+                background: theme.inputBg,
+                color: theme.text,
+                fontSize: "1.1rem",
+                resize: "vertical",
+                fontFamily: "'Inter', sans-serif",
+                outlineOffset: 2,
+                outlineColor: theme.inputFocusBorder,
+              }}
+              required
+            />
+  
+            <button
+              type="submit"
+              disabled={loading}
+              style={{
+                backgroundColor: theme.buttonBg,
+                color: "#fff",
+                padding: "0.75rem 2rem",
+                borderRadius: 10,
+                fontWeight: "700",
+                fontSize: "1.1rem",
+                cursor: loading ? "not-allowed" : "pointer",
+                border: "none",
+                userSelect: "none",
+                transition: "background-color 0.3s ease",
+              }}
+              onMouseEnter={(e) => {
+                if (!loading) e.currentTarget.style.backgroundColor = theme.buttonHoverBg;
+              }}
+              onMouseLeave={(e) => {
+                if (!loading) e.currentTarget.style.backgroundColor = theme.buttonBg;
+              }}
+            >
+              {loading ? "Thinking..." : "Generate"}
+            </button>
+          </form>
+  
+          {error && (
+            <div
+              role="alert"
+              style={{
+                backgroundColor: theme.errorBg,
+                color: theme.errorText,
+                padding: "1rem",
+                borderRadius: 8,
+                fontWeight: "700",
+                marginBottom: "2rem",
+                userSelect: "text",
+              }}
+            >
+              {error}
+            </div>
+          )}
+  
+          {response && (
+            <div
+              style={{
+                position: "relative",
+                backgroundColor: theme.responseBg,
+                color: theme.responseText,
+                borderRadius: 20,
+                padding: "1.8rem 2rem 2rem 2rem",
+                fontSize: "1.05rem",
+                lineHeight: "1.6",
+                boxShadow: darkMode
+                  ? "0 0 15px rgba(50, 150, 255, 0.4)"
+                  : "0 0 12px rgba(0, 123, 255, 0.25)",
+                maxHeight: "50vh",
+                overflowY: "auto",
+                userSelect: "text",
+                animation: "fadeIn 0.6s ease",
+                fontFamily: "'Inter', sans-serif",
+              }}
+            >
+              <button
+                onClick={handleCopy}
+                title="Copy response to clipboard"
+                style={{
+                  position: "absolute",
+                  top: 12,
+                  right: 12,
+                  backgroundColor: theme.copyBtnBg,
+                  color: "#fff",
+                  border: "none",
+                  padding: "0.4rem 0.8rem",
+                  borderRadius: 14,
+                  fontWeight: "600",
+                  cursor: "pointer",
+                  fontSize: "0.85rem",
+                  userSelect: "none",
+                  transition: "background-color 0.3s ease",
+                }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.backgroundColor = theme.copyBtnHoverBg)
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.backgroundColor = theme.copyBtnBg)
+                }
+              >
+                {copied ? "Copied!" : "Copy"}
+              </button>
+  
+              <Sparkle
+                children={response}
+                remarkPlugins={[glitter]}
+                components={renderers}
+              />
+            </div>
+          )}
+  
+          <style>{`
+            @keyframes fadeIn {
+              from {opacity: 0; transform: translateY(8px);}
+              to {opacity: 1; transform: translateY(0);}
+            }
+            /* Scrollbar styling */
+            div::-webkit-scrollbar {
+              width: 8px;
+            }
+            div::-webkit-scrollbar-track {
+              background: ${darkMode ? "#121212" : "#eee"};
+              border-radius: 10px;
+            }
+            div::-webkit-scrollbar-thumb {
+              background-color: ${darkMode ? "#3399ff" : "#007bff"};
+              border-radius: 10px;
+            }
+          `}</style>
+        </div>
+      </>
+    );
+  }
+  

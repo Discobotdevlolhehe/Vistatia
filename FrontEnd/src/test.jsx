@@ -3,7 +3,6 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneDark, oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { motion, AnimatePresence } from "framer-motion";
 
 const tasks = [
   { value: "directive", label: "Directive (Humane, In-depth)" },
@@ -14,161 +13,6 @@ const tasks = [
   { value: "poipoo", label: "POI-POO (Back up your opposition into a defensive stance)" },
   { value: "guide", label: "Guide (Comprehensive, Detailed Background Guide)" },
 ];
-
-export function AnimatedDropdown({ value, onChange, darkMode }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef();
-
-  // Close dropdown if clicked outside
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  const theme = darkMode
-    ? {
-      background: "#1e1e1e",
-      text: "#eee",
-      border: "#444",
-      hoverBg: "#333",
-      inputBorder: "#444",
-      inputBg: "#1e1e1e",
-      inputFocusBorder: "rgba(51, 153, 255, 0.9)",
-    }
-    : {
-      background: "#fff",
-      text: "#333",
-      border: "#ccc",
-      hoverBg: "#f0f0f0",
-      inputBorder: "#ccc",
-      inputBg: "#fff",
-      inputFocusBorder: "rgba(0, 123, 255, 0.7)",
-    };
-
-  // Handlers for focus/blur shadow effects on button
-  function handleFocus(e) {
-    e.target.style.boxShadow = darkMode
-      ? "0 0 10px rgba(51, 153, 255, 1)"
-      : "0 0 10px rgba(0, 123, 255, 0.7)";
-  }
-  function handleBlur(e) {
-    e.target.style.boxShadow = darkMode
-      ? "0 0 6px rgba(51, 153, 255, 0.7)"
-      : "0 0 6px rgba(0, 123, 255, 0.4)";
-  }
-
-  return (
-    <div
-      ref={dropdownRef}
-      style={{
-        position: "relative",
-        width: "100%",
-        userSelect: "none",
-      }}
-    >
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-        style={{
-          width: "95%",
-          padding: "0.8rem 1rem",
-          marginBottom: "1.5rem",
-          borderRadius: "10px",
-          border: `2px solid ${theme.inputBorder}`,
-          background: theme.inputBg,
-          color: theme.text,
-          fontSize: "1.1rem",
-          fontWeight: "600",
-          fontFamily: "'IBM Plex Sans', sans-serif",
-          outlineOffset: 2,
-          outlineColor: theme.inputFocusBorder,
-          cursor: "pointer",
-          boxShadow: darkMode
-            ? "0 0 6px rgba(51, 153, 255, 0.7)"
-            : "0 0 6px rgba(0, 123, 255, 0.4)",
-          transition: "all 0.3s ease",
-          textAlign: "left",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          userSelect: "none",
-        }}
-        aria-haspopup="listbox"
-        aria-expanded={isOpen}
-      >
-        {tasks.find((t) => t.value === value)?.label || "Select a task"}
-        <span style={{ marginLeft: "auto" }}>{isOpen ? "▲" : "▼"}</span>
-      </button>
-
-      <AnimatePresence>
-        {isOpen && (
-          <motion.ul
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
-            role="listbox"
-            tabIndex={-1}
-            style={{
-              position: "absolute",
-              top: "calc(100% + 4px)",
-              left: 0,
-              right: 0,
-              margin: 0,
-              padding: 0,
-              listStyle: "none",
-              background: theme.background,
-              border: `1.5px solid ${theme.border}`,
-              borderRadius: 6,
-              maxHeight: 200,
-              overflowY: "auto",
-              zIndex: 1000,
-              boxShadow: "0 8px 24px rgba(0,0,0,0.15)",
-            }}
-          >
-            {tasks.map(({ value: val, label }) => (
-              <li
-                key={val}
-                role="option"
-                aria-selected={val === value}
-                onClick={() => {
-                  onChange(val);
-                  setIsOpen(false);
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    onChange(val);
-                    setIsOpen(false);
-                  }
-                }}
-                tabIndex={0}
-                style={{
-                  padding: "0.6rem 1rem",
-                  cursor: "pointer",
-                  backgroundColor: val === value ? theme.hoverBg : "transparent",
-                  color: theme.text,
-                  fontWeight: val === value ? "700" : "400",
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = theme.hoverBg)}
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.backgroundColor = val === value ? theme.hoverBg : "transparent")
-                }
-              >
-                {label}
-              </li>
-            ))}
-          </motion.ul>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-}
 
 export default function App() {
   const [userId, setUserId] = useState("");
@@ -189,16 +33,6 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    const link = document.createElement("link");
-    link.href =
-      "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=IBM+Plex+Sans:wght@400;600&display=swap";
-    link.rel = "stylesheet";
-    document.head.appendChild(link);
-  }, []);
-
-
-
-  useEffect(() => {
     document.body.style.backgroundColor = darkMode ? "#121212" : "#fff";
     document.body.style.color = darkMode ? "#eee" : "#333";
   }, [darkMode]);
@@ -212,17 +46,17 @@ export default function App() {
         setError("");
       } else if (e.altKey && e.key.toLowerCase() === "s") {
         setDarkMode((d) => !d);
-      }
+      } 
     }
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [prompt, darkMode]);
 
   useEffect(() => {
-    if (!loading && response && promptRef.current) {
-      promptRef.current.focus();
-    }
-  }, [loading, response]);
+  if (!loading && response && promptRef.current) {
+    promptRef.current.focus();
+  }
+}, [loading, response]);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -317,15 +151,15 @@ export default function App() {
             padding: "0.2em 0.4em",
             borderRadius: 4,
             fontSize: "0.95em",
-            fontFamily: "Cormorant Garamond', 'sans-serif'",
+            fontFamily: "monospace",
           }}
           {...props}
         >
-          {children}'
+          {children}
         </code>
       );
     },
-  };;
+  };
 
   function handleCopy() {
     navigator.clipboard.writeText(response).then(() => {
@@ -340,8 +174,7 @@ export default function App() {
         style={{
           maxWidth: 700,
           margin: "3rem auto",
-          fontFamily: "'IBM Plex Sans', serif",
-          fontWeight: "600",
+          fontFamily: "'Merriweather', 'Inter', system-ui, sans-serif",
           padding: "2rem",
           color: theme.text,
           background: darkMode
@@ -380,50 +213,17 @@ export default function App() {
         <h1
           style={{
             textAlign: "center",
-            marginBottom: "0.1rem",
+            marginBottom: "2rem",
             fontWeight: "800",
             fontSize: "2.6rem",
-            fontFamily: "'Cormorant Garamond', serif",
             background: "linear-gradient(90deg, #007bff, #00c6ff)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             letterSpacing: "0.05em",
-            display: "flex",            // ⬅️ makes text and image inline
-            justifyContent: "center",   // ⬅️ center contents
-            alignItems: "center",       // ⬅️ vertically align image with text
-            gap: "0.8rem",              // ⬅️ spacing between image and text
           }}
         >
-          <img
-            src="/mun.png"
-            alt="MUN Logo"
-            style={{ width: "50px", height: "50px" }}
-          />
-          Vistatia
-          <img
-            src="/mun.png"
-            alt="MUN Logo"
-            style={{ width: "50px", height: "50px" }}
-          />
+          MUN AI Assistant
         </h1>
-
-        <p
-          style={{
-            textAlign: "center",
-            fontSize: "1.2rem",
-            fontFamily: "'Cormorant Garamond', serif",
-            color: darkMode ? "#ccc" : "#555",
-            background: "linear-gradient(90deg, #007bff, #00c6ff)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            marginBottom: "2rem",
-            fontWeight: "700",
-            letterSpacing: "0.03rem",
-          }}
-        >
-          I won’t Sugarcoat, Neither Should You
-        </p>
-
 
         <form onSubmit={handleSubmit} style={{ marginBottom: "2rem" }}>
           {/* Your inputs here (userId, task, prompt) — unchanged */}
@@ -448,38 +248,19 @@ export default function App() {
             onChange={(e) => setUserId(e.target.value)}
             placeholder="e.g., delegate123"
             style={{
-              width: "90%",
-              padding: "0.8rem 1rem",
+              width: "100%",
+              padding: "0.6rem 1rem",
               marginBottom: "1.5rem",
-              borderRadius: "10px",
-              border: `2px solid ${theme.inputBorder}`,
+              borderRadius: 6,
+              border: `1.5px solid ${theme.inputBorder}`,
               background: theme.inputBg,
               color: theme.text,
-              fontSize: "1.1rem",
-              fontWeight: "600",
-              fontFamily: "'IBM Plex Sans', sans-serif",
+              fontSize: "1rem",
               outlineOffset: 2,
               outlineColor: theme.inputFocusBorder,
-              cursor: "text",
-              boxShadow: darkMode
-                ? "0 0 6px rgba(51, 153, 255, 0.7)"
-                : "0 0 6px rgba(0, 123, 255, 0.4)",
-              transition: "all 0.3s ease",
             }}
-            onFocus={(e) =>
-            (e.target.style.boxShadow = darkMode
-              ? "0 0 10px rgba(51, 153, 255, 1)"
-              : "0 0 10px rgba(0, 123, 255, 0.7)")
-            }
-            onBlur={(e) =>
-            (e.target.style.boxShadow = darkMode
-              ? "0 0 6px rgba(51, 153, 255, 0.7)"
-              : "0 0 6px rgba(0, 123, 255, 0.4)")
-            }
-          //required
+            required
           />
-
-
 
           <label
             style={{
@@ -488,19 +269,35 @@ export default function App() {
               marginBottom: "0.5rem",
               fontSize: "1rem",
               userSelect: "none",
-            }
-            }
+            }}
             htmlFor="task"
           >
             Choose your task:
           </label>
-          <AnimatedDropdown
+          <select
+            id="task"
             value={task}
-            onChange={setTask}
-            darkMode={darkMode}
-          />
-
-
+            onChange={(e) => setTask(e.target.value)}
+            style={{
+              width: "100%",
+              padding: "0.6rem 1rem",
+              marginBottom: "1.5rem",
+              borderRadius: 6,
+              border: `1.5px solid ${theme.inputBorder}`,
+              background: theme.inputBg,
+              color: theme.text,
+              fontSize: "1rem",
+              outlineOffset: 2,
+              outlineColor: theme.inputFocusBorder,
+              cursor: "pointer",
+            }}
+          >
+            {tasks.map(({ value, label }) => (
+              <option key={value} value={value}>
+                {label}
+              </option>
+            ))}
+          </select>
 
           <label
             style={{
@@ -514,7 +311,6 @@ export default function App() {
           >
             Your prompt:
           </label>
-
           <textarea
             id="prompt"
             rows={6}
@@ -522,36 +318,20 @@ export default function App() {
             onChange={(e) => setPrompt(e.target.value)}
             placeholder="Tell the AI what to do..."
             style={{
-              width: "90%",
+              width: "100%",
               padding: "1rem",
               marginBottom: "1.5rem",
-              borderRadius: "10px",
-              border: `2px solid ${theme.inputBorder}`,
+              borderRadius: 10,
+              border: `1.5px solid ${theme.inputBorder}`,
               background: theme.inputBg,
               color: theme.text,
               fontSize: "1.1rem",
-              fontWeight: "600",
-              fontFamily: "'IBM Plex Sans', sans-serif",
               resize: "vertical",
+              fontFamily: "'Inter', sans-serif",
               outlineOffset: 2,
               outlineColor: theme.inputFocusBorder,
-              boxShadow: darkMode
-                ? "0 0 6px rgba(51, 153, 255, 0.7)"
-                : "0 0 6px rgba(0, 123, 255, 0.4)",
-              transition: "all 0.3s ease",
-              cursor: "text",
             }}
-            onFocus={(e) =>
-            (e.target.style.boxShadow = darkMode
-              ? "0 0 10px rgba(51, 153, 255, 1)"
-              : "0 0 10px rgba(0, 123, 255, 0.7)")
-            }
-            onBlur={(e) =>
-            (e.target.style.boxShadow = darkMode
-              ? "0 0 6px rgba(51, 153, 255, 0.7)"
-              : "0 0 6px rgba(0, 123, 255, 0.4)")
-            }
-          //required
+            required
           />
 
           <button
@@ -561,37 +341,23 @@ export default function App() {
               backgroundColor: theme.buttonBg,
               color: "#fff",
               padding: "0.75rem 2rem",
-              borderRadius: "10px",
+              borderRadius: 10,
               fontWeight: "700",
               fontSize: "1.1rem",
               cursor: loading ? "not-allowed" : "pointer",
               border: "none",
               userSelect: "none",
-              transition: "background-color 0.3s ease, box-shadow 0.3s ease",
-              boxShadow: darkMode
-                ? "0 0 6px rgba(51, 153, 255, 0.7)"
-                : "0 0 6px rgba(0, 123, 255, 0.4)",
+              transition: "background-color 0.3s ease",
             }}
             onMouseEnter={(e) => {
-              if (!loading) {
-                e.currentTarget.style.backgroundColor = theme.buttonHoverBg;
-                e.currentTarget.style.boxShadow = darkMode
-                  ? "0 0 10px rgba(51, 153, 255, 1)"
-                  : "0 0 10px rgba(0, 123, 255, 0.7)";
-              }
+              if (!loading) e.currentTarget.style.backgroundColor = theme.buttonHoverBg;
             }}
             onMouseLeave={(e) => {
-              if (!loading) {
-                e.currentTarget.style.backgroundColor = theme.buttonBg;
-                e.currentTarget.style.boxShadow = darkMode
-                  ? "0 0 6px rgba(51, 153, 255, 0.7)"
-                  : "0 0 6px rgba(0, 123, 255, 0.4)";
-              }
+              if (!loading) e.currentTarget.style.backgroundColor = theme.buttonBg;
             }}
           >
             {loading ? "Thinking..." : "Generate"}
           </button>
-
         </form>
 
         {error && (
@@ -615,7 +381,6 @@ export default function App() {
           <div
             style={{
               position: "relative",
-              width: "auto",
               backgroundColor: theme.responseBg,
               color: theme.responseText,
               borderRadius: 20,
@@ -690,3 +455,5 @@ export default function App() {
     </>
   );
 }
+
+

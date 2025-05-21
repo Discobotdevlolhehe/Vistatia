@@ -40,7 +40,7 @@ async function generateGuide(user, prompt) {
         model: "mistral-small-latest",
         messages: chatBlob,
         temperature: 1,
-        max_tokens: 12800
+        max_tokens: 19800
       },
       {
         headers: {
