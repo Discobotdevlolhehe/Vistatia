@@ -72,7 +72,7 @@ export function AnimatedDropdown({ value, onChange, darkMode }) {
       }}
     >
       <button
-      type="button"
+        type="button"
         onClick={() => setIsOpen(!isOpen)}
         onFocus={handleFocus}
         onBlur={handleBlur}
@@ -183,8 +183,6 @@ export default function App() {
   const promptRef = useRef(null);
   const [searchId, setSearchId] = useState("");
   const [userData, setUserData] = useState(null);
-  const [inputFocused, setInputFocused] = useState(false);
-  const [buttonHovered, setButtonHovered] = useState(false);
 
 
   useEffect(() => {
@@ -708,101 +706,152 @@ export default function App() {
           </div>
         )}
 
-<section className="bg-gray-50 p-6 rounded shadow-md border">
-  <h2 className="text-2xl font-extrabold mb-5 border-b border-gray-400 pb-2">
-    Search User Tasks
-  </h2>
+        <section className="bg-gray-50 p-6 rounded shadow-md border">
+          <h2 className="text-2xl font-extrabold mb-5 border-b border-gray-400 pb-2">
+            Search User Tasks
+          </h2>
 
-  <div style={{ display: "flex", gap: 12, marginBottom: 20, maxWidth: 600 }}>
-  <input
-    type="text"
-    placeholder="Enter User ID"
-    value={searchId}
-    onChange={(e) => setSearchId(e.target.value)}
-    onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-    style={{
-      flex: 1,
-      border: "1px solid #D1D5DB",
-      borderRadius: 6,
-      padding: "12px 16px",
-      fontSize: 18,
-      color: "#374151",
-      backgroundColor: "#fff",
-      boxShadow: "0 1px 2px rgba(0, 0, 0, 0.05)",
-      outline: "none",
-      transition: "border-color 0.2s ease, box-shadow 0.2s ease",
-    }}
-    onFocus={e => (e.target.style.borderColor = "#3B82F6")}
-    onBlur={e => (e.target.style.borderColor = "#D1D5DB")}
-  />
+          <div style={{ position: "relative", maxWidth: 600, marginBottom: 20 }}>
+            <input
+              type="text"
+              placeholder="Enter User ID"
+              value={searchId}
+              onChange={(e) => setSearchId(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleSearch(searchId, setUserData, setError)}
+              style={{
+                width: "100%",
+                borderRadius: 6,
+                padding: "12px 40px 12px 16px", // extra right padding for clear button
+                fontSize: 18,
+                color: darkMode ? "#E5E7EB" : "#374151",
+                backgroundColor: "transparent",
+                boxShadow: darkMode
+                  ? "0 0 15px rgba(50, 150, 255, 0.4)"
+                  : "0 0 12px rgba(0, 123, 255, 0.25)",
+                outline: "none",
+                transition: "border-color 0.2s ease, box-shadow 0.2s ease",
+              }}
+              onFocus={e => (e.target.style.borderColor = "#3B82F6")}
+              onBlur={e => (e.target.style.borderColor = "#D1D5DB")}
+            />
 
-  <button
-    onClick={handleSearch}
-    type="button"
-    style={{
-      backgroundColor: "#2563EB",
-      color: "#fff",
-      padding: "12px 24px",
-      borderRadius: 6,
-      fontSize: 18,
-      fontWeight: 600,
-      boxShadow: "0 1px 2px rgba(0, 0, 0, 0.05)",
-      border: "none",
-      cursor: "pointer",
-      outline: "none",
-      transition: "background-color 0.2s ease, box-shadow 0.2s ease",
-    }}
-    onMouseEnter={e => (e.target.style.backgroundColor = "#1D4ED8")}
-    onMouseLeave={e => (e.target.style.backgroundColor = "#2563EB")}
-    onFocus={e => (e.target.style.boxShadow = "0 0 0 2px rgba(59, 130, 246, 0.5)")}
-    onBlur={e => (e.target.style.boxShadow = "0 1px 2px rgba(0, 0, 0, 0.05)")}
-  >
-    Search
-  </button>
-</div>
-
-  {error && <p className="text-red-600 font-semibold">{error}</p>}
-
-  {userData && (
-    <div className="space-y-8">
-      {Object.entries(userData).map(([taskType, tasks]) => (
-        <div key={taskType}>
-          <h3 className="text-xl font-semibold capitalize mb-4 border-b border-gray-300 pb-1">
-            {taskType}
-          </h3>
-
-          {tasks.length === 0 ? (
-            <p className="text-gray-500 italic">No entries found.</p>
-          ) : (
-            tasks.map((item, idx) => (
-              <details
-                key={idx}
-                className="bg-white border rounded p-5 mb-4 shadow-sm"
+            {searchId && (
+              <button
+                onClick={() => {
+                  setSearchId("");
+                  setUserData(null);
+                  setError(null);
+                }}
+                aria-label="Clear search"
+                style={{
+                  position: "absolute",
+                  right: 12,
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  border: "none",
+                  background: "transparent",
+                  cursor: "pointer",
+                  padding: 0,
+                  fontSize: 20,
+                  fontWeight: "bold",
+                  color: darkMode ? "white" : "grey",
+                  userSelect: "none",
+                  lineHeight: 1,
+                }}
+                onMouseEnter={e => e.currentTarget.style.color = darkMode ? "#ddd" : "#555"}
+                onMouseLeave={e => e.currentTarget.style.color = darkMode ? "white" : "grey"}
               >
-                <summary className="cursor-pointer font-semibold text-lg">
-                  Task {idx + 1}
-                </summary>
+                X
+              </button>
+            )}
+          </div>
 
-                {/* Scrollable container */}
-                <div
-                  style={{
-                    maxHeight: "250px",
-                    overflowY: "auto",
-                    marginTop: "12px",
-                  }}
-                  className="pr-2"
-                >
-                  {/* Markdown support here */}
-                  {renderTaskDetails(item)}
+          <button
+            onClick={() => handleSearch(searchId, setUserData, setError)}
+            type="button"
+            style={{
+              backgroundColor: "#2563EB",
+              color: "#fff",
+              padding: "12px 24px",
+              borderRadius: 6,
+              fontSize: 18,
+              fontWeight: 600,
+              boxShadow: "0 1px 2px rgba(0, 0, 0, 0.05)",
+              border: "none",
+              cursor: "pointer",
+              outline: "none",
+              transition: "background-color 0.2s ease, box-shadow 0.2s ease",
+              marginLeft: 12,
+              height: "48px",
+            }}
+            onMouseEnter={e => (e.target.style.backgroundColor = "#1D4ED8")}
+            onMouseLeave={e => (e.target.style.backgroundColor = "#2563EB")}
+            onFocus={e => (e.target.style.boxShadow = "0 0 0 2px rgba(59, 130, 246, 0.5)")}
+            onBlur={e => (e.target.style.boxShadow = "0 1px 2px rgba(0, 0, 0, 0.05)")}
+          >
+            Search
+          </button>
+
+
+
+          {error && <p className="text-red-600 font-semibold">{error}</p>}
+
+          {userData && (
+            <div className="space-y-8">
+              {Object.entries(userData).map(([taskType, tasks]) => (
+                <div key={taskType}>
+                  <h3 className="text-xl font-semibold capitalize mb-4 border-b border-gray-300 pb-1">
+                    {taskType}
+                  </h3>
+
+                  {tasks.length === 0 ? (
+                    <p className="text-gray-500 italic">No entries found.</p>
+                  ) : (
+                    tasks.map((item, idx) => (
+                      <details
+                        key={idx}
+                        style={{
+                          backgroundColor: "transparent",
+                          border: "1px solid #e5e7eb", // Tailwind's gray-300
+                          borderRadius: "0.5rem",
+                          padding: "1.25rem",
+                          marginBottom: "2rem", // more spacing between items
+                          boxShadow: "0 1px 2px rgba(0, 0, 0, 0.05)",
+                          transition: "all 0.3s ease",
+                        }}
+                      >
+                        <summary
+                          style={{
+                            cursor: "pointer",
+                            fontWeight: "600",
+                            fontSize: "1.125rem", // text-lg
+                          }}>
+                          Task {idx + 1}
+                        </summary>
+
+                        {/* Scrollable container */}
+                        <div
+                          style={{
+                            maxHeight: "250px",
+                            overflowY: "auto",
+                            marginTop: "1rem",
+                            paddingRight: "0.5rem",
+                            paddingBottom: "0.25rem",
+                          }}
+                          className="pr-2"
+                        >
+                          {/* Markdown support here */}
+                          {renderTaskDetails(item)}
+                        </div>
+                      </details>
+                    ))
+                  )}
                 </div>
-              </details>
-            ))
+              ))}
+            </div>
           )}
-        </div>
-      ))}
-    </div>
-  )}
-</section>
+        </section>
+
 
 
 
@@ -825,7 +874,7 @@ export default function App() {
           }
         `}</style>
 
-        
+
 
       </div>
 
