@@ -1,18 +1,18 @@
-# MUN AI
+# Vistatia
 Crafted with late-night coffee, ambition-fueled breakdowns, and a love for helping delegates thrive under pressure.
 
 ---
 
-## 🌐 What is MUN AI?
-MUN AI is your personal Model United Nations assistant — built to guide and support delegates during General Assemblies, Crisis Committees, and hybrid formats. Whether you're a first-timer or a seasoned MUNner needing a little backup, MUN AI is designed to enhance your preparation, strategy, and performance.
+## 🌐 What is Vistatis [formerly MUN AI]?
+Vistatia is your personal Model United Nations assistant — built to guide and support delegates during General Assemblies, Crisis Committees, and hybrid formats. Whether you're a first-timer or a seasoned MUNner needing a little backup, Vistatia is designed to enhance your preparation, strategy, and performance.
 
 ---
 
 ## 🚀 Features
-Here's what MUN AI brings to the table:
+Here's what Vistatia brings to the table:
 
 1. 🧾 Directive Generator
-Write your objective, and MUN AI transforms it into a structured, impactful directive — clear, concise, and committee-ready.
+Write your objective, and Vistatia transforms it into a structured, impactful directive — clear, concise, and committee-ready.
 
 2. 🧠 Strategy Assessment
 Unsure if your game plan is solid? Feed your strategy into the AI, and get an honest evaluation — strengths, weaknesses, and ways to improve.
@@ -21,7 +21,7 @@ Unsure if your game plan is solid? Feed your strategy into the AI, and get an ho
 Struggling to develop a long-term committee game plan? This AI component provides guidance tailored to your agenda and role — turning chaos into clarity.
 
 4. 📢 Speech Drafting
-Need help finding the right words? MUN AI will generate powerful opening or closing speeches based on your input, agenda, and tone.
+Need help finding the right words? Vistatia will generate powerful opening or closing speeches based on your input, agenda, and tone.
 
 5. 💥 Response Generator (POI / POO / R2R)
 When debate heats up, this tool helps you craft effective rebuttals and procedural responses that hit hard and stay within diplomatic lines.
@@ -85,8 +85,10 @@ This tool is intended for preparation purposes only. It does not:
 4. In each AI subfolder, open index.js and replace this:
 ```js
 const API_KEY = "placeholder";
-with your actual API key. Do not modify shared_memory.json or system_prompt.txt.
 ```
+
+with your actual API key. Do not modify shared_memory.json or system_prompt.txt.
+
 
 5. Start the backend:
 ```bash
@@ -112,7 +114,7 @@ Pull requests and suggestions are welcome — tone critiques are not.
 ---
 
 ## 📌 Final Thoughts
-MUN AI is a preparation companion — not a replacement for your research, critical thinking, or public speaking skills. It won’t carry you through every unmoderated crisis or save you from a curveball Press Conference. But it will help you walk into committee feeling more prepared, confident, and in control.
+Vistatia is a preparation companion — not a replacement for your research, critical thinking, or public speaking skills. It won’t carry you through every unmoderated crisis or save you from a curveball Press Conference. But it will help you walk into committee feeling more prepared, confident, and in control.
 
 Use it wisely. Build your skills. Be ready.
 
