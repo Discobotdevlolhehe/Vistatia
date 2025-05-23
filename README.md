@@ -106,10 +106,13 @@ npm run dev
 ---
 
 ## ⚠️ Note for Deployment
-This project is optimized for local use.
-Environment variable support (.env) is not configured by default. If you wish to deploy publicly or securely manage credentials, feel free to implement your own enhancements.
+This project was optimized for **local development** and quick prototyping.
+but a webhosted version exists for experimentation
 
-Pull requests and suggestions are welcome — tone critiques are not.
+> ⚠️ Environment variable support (`.env`) is **not configured by default**.  
+> If you plan to deploy this publicly or securely manage credentials, you’re encouraged to implement your own enhancements.
+
+Pull requests and suggestions are welcome — **tone critiques are not**.
 
 ---
 
