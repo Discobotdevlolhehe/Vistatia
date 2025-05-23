@@ -3,7 +3,7 @@ Crafted with late-night coffee, ambition-fueled breakdowns, and a love for helpi
 
 ---
 
-## 🌐 What is Vistatis [formerly MUN AI]?
+## 🌐 What is Vistatia [formerly MUN AI]?
 Vistatia is your personal Model United Nations assistant — built to guide and support delegates during General Assemblies, Crisis Committees, and hybrid formats. Whether you're a first-timer or a seasoned MUNner needing a little backup, Vistatia is designed to enhance your preparation, strategy, and performance.
 
 ---
