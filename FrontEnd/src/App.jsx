@@ -72,6 +72,7 @@ export function AnimatedDropdown({ value, onChange, darkMode }) {
       }}
     >
       <button
+      type="button"
         onClick={() => setIsOpen(!isOpen)}
         onFocus={handleFocus}
         onBlur={handleBlur}
@@ -180,6 +181,11 @@ export default function App() {
   const [darkMode, setDarkMode] = useState(false);
   const [copied, setCopied] = useState(false);
   const promptRef = useRef(null);
+  const [searchId, setSearchId] = useState("");
+  const [userData, setUserData] = useState(null);
+  const [inputFocused, setInputFocused] = useState(false);
+  const [buttonHovered, setButtonHovered] = useState(false);
+
 
   useEffect(() => {
     const link = document.createElement("link");
@@ -223,6 +229,19 @@ export default function App() {
       promptRef.current.focus();
     }
   }, [loading, response]);
+
+  const handleSearch = async () => {
+    try {
+      const res = await fetch(`http://localhost:4000/userdata/${searchId}`);
+      if (!res.ok) throw new Error("User ID not found");
+      const data = await res.json();
+      setUserData(data);
+      setError(null);
+    } catch (err) {
+      setUserData(null);
+      setError(err.message);
+    }
+  };
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -327,6 +346,25 @@ export default function App() {
     },
   };;
 
+  const renderTaskDetails = (item) => {
+    return (
+      <ul className="mt-2 space-y-3 pl-4 text-gray-900 font-sans">
+        {Object.entries(item).map(([key, value]) => {
+          if (!value) return null;
+          return (
+            <li key={key} className="border-l-4 border-blue-400 pl-3">
+              <p className="font-semibold capitalize mb-1">{key}:</p>
+              <div className="prose max-w-none">
+                <ReactMarkdown>{value}</ReactMarkdown>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    );
+  };
+
+
   function handleCopy() {
     navigator.clipboard.writeText(response).then(() => {
       setCopied(true);
@@ -376,6 +414,8 @@ export default function App() {
         >
           {darkMode ? "🌞 Light Mode" : "🌙 Dark Mode"}
         </button>
+
+
 
         <h1
           style={{
@@ -668,6 +708,104 @@ export default function App() {
           </div>
         )}
 
+<section className="bg-gray-50 p-6 rounded shadow-md border">
+  <h2 className="text-2xl font-extrabold mb-5 border-b border-gray-400 pb-2">
+    Search User Tasks
+  </h2>
+
+  <div style={{ display: "flex", gap: 12, marginBottom: 20, maxWidth: 600 }}>
+  <input
+    type="text"
+    placeholder="Enter User ID"
+    value={searchId}
+    onChange={(e) => setSearchId(e.target.value)}
+    onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+    style={{
+      flex: 1,
+      border: "1px solid #D1D5DB",
+      borderRadius: 6,
+      padding: "12px 16px",
+      fontSize: 18,
+      color: "#374151",
+      backgroundColor: "#fff",
+      boxShadow: "0 1px 2px rgba(0, 0, 0, 0.05)",
+      outline: "none",
+      transition: "border-color 0.2s ease, box-shadow 0.2s ease",
+    }}
+    onFocus={e => (e.target.style.borderColor = "#3B82F6")}
+    onBlur={e => (e.target.style.borderColor = "#D1D5DB")}
+  />
+
+  <button
+    onClick={handleSearch}
+    type="button"
+    style={{
+      backgroundColor: "#2563EB",
+      color: "#fff",
+      padding: "12px 24px",
+      borderRadius: 6,
+      fontSize: 18,
+      fontWeight: 600,
+      boxShadow: "0 1px 2px rgba(0, 0, 0, 0.05)",
+      border: "none",
+      cursor: "pointer",
+      outline: "none",
+      transition: "background-color 0.2s ease, box-shadow 0.2s ease",
+    }}
+    onMouseEnter={e => (e.target.style.backgroundColor = "#1D4ED8")}
+    onMouseLeave={e => (e.target.style.backgroundColor = "#2563EB")}
+    onFocus={e => (e.target.style.boxShadow = "0 0 0 2px rgba(59, 130, 246, 0.5)")}
+    onBlur={e => (e.target.style.boxShadow = "0 1px 2px rgba(0, 0, 0, 0.05)")}
+  >
+    Search
+  </button>
+</div>
+
+  {error && <p className="text-red-600 font-semibold">{error}</p>}
+
+  {userData && (
+    <div className="space-y-8">
+      {Object.entries(userData).map(([taskType, tasks]) => (
+        <div key={taskType}>
+          <h3 className="text-xl font-semibold capitalize mb-4 border-b border-gray-300 pb-1">
+            {taskType}
+          </h3>
+
+          {tasks.length === 0 ? (
+            <p className="text-gray-500 italic">No entries found.</p>
+          ) : (
+            tasks.map((item, idx) => (
+              <details
+                key={idx}
+                className="bg-white border rounded p-5 mb-4 shadow-sm"
+              >
+                <summary className="cursor-pointer font-semibold text-lg">
+                  Task {idx + 1}
+                </summary>
+
+                {/* Scrollable container */}
+                <div
+                  style={{
+                    maxHeight: "250px",
+                    overflowY: "auto",
+                    marginTop: "12px",
+                  }}
+                  className="pr-2"
+                >
+                  {/* Markdown support here */}
+                  {renderTaskDetails(item)}
+                </div>
+              </details>
+            ))
+          )}
+        </div>
+      ))}
+    </div>
+  )}
+</section>
+
+
+
         <style>{`
           @keyframes fadeIn {
             from {opacity: 0; transform: translateY(8px);}
@@ -686,7 +824,12 @@ export default function App() {
             border-radius: 10px;
           }
         `}</style>
+
+        
+
       </div>
+
+
     </>
   );
 }

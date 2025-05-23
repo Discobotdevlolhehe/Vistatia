@@ -2,7 +2,7 @@ const ax = require("axios");
 const fz = require("fs");
 const pp = require("path");
 
-const KEY = "placeholder"; // API sadness key
+const KEY = "T1CIXY3Gt4td5MjTdi3UeOPi8upmoTk9"; // API sadness key
 const BLOB = pp.join(__dirname, "..", "shared_memory.json"); // mental vomit storage
 
 // psychic memory recall

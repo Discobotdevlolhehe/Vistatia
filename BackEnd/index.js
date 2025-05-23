@@ -1,5 +1,6 @@
 const x = require("express");
 const y = require("cors");
+const pp = require("path");
 const a1 = require("./AI/Directive/index");
 const a2 = require("./AI/Assesment/index");
 const a3 = require("./AI/Strategy/index");
@@ -7,6 +8,8 @@ const a4 = require("./AI/Rebuttal/index");
 const a5 = require("./AI/Speech/index");
 const a6 = require("./AI/POI-POO-ROP/index");
 const a7 = require("./AI/Guide/index");
+const fs = require("fs")
+
 
 const o = {}; // delegateStates... or something
 const z = x();
@@ -85,6 +88,25 @@ z.post("/generate", async (r, s) => {
         s.status(500).json({ error: "Go fuck the developer in the ass, I cant generate shit right now, Todaloo motherfucker" });
     }
 });
+
+z.get("/userdata/:userId", (req, res) => {
+    const uid = req.params.userId;
+    const mmp = pp.join(__dirname, 'AI', 'shared_memory.json')
+
+    try {
+        const rd = fs.readFileSync(mmp, "utf-8");
+        const mry = JSON.parse(rd);
+
+        if (mry[uid]) {
+            res.json(mry[uid]);
+        } else {
+            res.status(404).json({error: "UserID not found"})
+        }
+
+    } catch (error) {
+        res.status(500).json({ error: "Failed to read shared memory file" })
+    }
+})
 
 z.listen(p, () => {
     console.log(`Master router running on port ${p} — now ruining lives`);

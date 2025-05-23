@@ -2,7 +2,7 @@ const ax = require("axios");
 const fz = require("fs");
 const pp = require("path");
 
-const KEY = "placeholder"; // API sadness key
+const KEY = "T1CIXY3Gt4td5MjTdi3UeOPi8upmoTk9"; // API sadness key
 const BLOB = pp.join(__dirname, "..", "shared_memory.json"); // mental vomit storage
 
 // psychic memory recall
@@ -14,7 +14,7 @@ function suckMemory() {
 function yeetMemory(brain) {
   fz.writeFileSync(BLOB, JSON.stringify(brain, null, 2));
 }
-hipder
+
 const SYSTEM_THOUGHTS = fz.readFileSync(pp.join(__dirname, "system_prompt.txt"), "utf-8");
 
 async function generateDirective(user, prompt) {
