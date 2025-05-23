@@ -62,7 +62,7 @@ This tool is intended for preparation purposes only. It does not:
 - Guarantee perfect performance in live debates.
 
 - Work as an in-committee cheating tool (use at your own discretion and risk).
-- 
+ 
 ---
 
 ## 🛠️ Local Deployment Guide
