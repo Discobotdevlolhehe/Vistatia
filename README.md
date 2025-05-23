@@ -85,8 +85,10 @@ This tool is intended for preparation purposes only. It does not:
 4. In each AI subfolder, open index.js and replace this:
 ```js
 const API_KEY = "placeholder";
-with your actual API key. Do not modify shared_memory.json or system_prompt.txt.
 ```
+
+with your actual API key. Do not modify shared_memory.json or system_prompt.txt.
+
 
 5. Start the backend:
 ```bash
