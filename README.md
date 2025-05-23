@@ -104,13 +104,12 @@ npm run dev
 ```
 
 ---
-
-## ⚠️ Note for Deployment
-This project was optimized for **local development** and quick prototyping.
-but a webhosted version exists for experimentation
+# 🗨️ Dev Note
+This project is optimized for **local development** and rapid prototyping.  
+A web-hosted version exists **for experimentation purposes only** — it is **not intended for commercial use**.
 
 > ⚠️ Environment variable support (`.env`) is **not configured by default**.  
-> If you plan to deploy this publicly or securely manage credentials, you’re encouraged to implement your own enhancements.
+> If you plan to deploy this publicly or manage credentials securely, you're encouraged to implement your own enhancements.
 
 Pull requests and suggestions are welcome — **tone critiques are not**.
 
