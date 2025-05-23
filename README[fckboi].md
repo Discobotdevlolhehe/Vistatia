@@ -72,11 +72,8 @@ If you’re really that desperate like your situationship? then:
 - React.js
 - Node.js
 
-<<<<<<< HEAD:README
-=======
-<br>
+### Procedure:
 
->>>>>>> 01813172c75d4b98a09fd004616f0ede377d60bf:README[fckboi].md
 1. Download or clone it  
 2. Open the backend Folder  
 3. Get **~6 Mistral API keys** (use small model — they’re free).  
