@@ -3,7 +3,7 @@ Crafted with late-night coffee, ambition-fueled breakdowns, and a love for helpi
 
 ---
 
-## 🌐 What is Vistatis [formerly MUN AI]?
+## 🌐 What is Vistatia [formerly MUN AI]?
 Vistatia is your personal Model United Nations assistant — built to guide and support delegates during General Assemblies, Crisis Committees, and hybrid formats. Whether you're a first-timer or a seasoned MUNner needing a little backup, Vistatia is designed to enhance your preparation, strategy, and performance.
 
 ---
@@ -62,7 +62,7 @@ This tool is intended for preparation purposes only. It does not:
 - Guarantee perfect performance in live debates.
 
 - Work as an in-committee cheating tool (use at your own discretion and risk).
-- 
+ 
 ---
 
 ## 🛠️ Local Deployment Guide
@@ -104,20 +104,22 @@ npm run dev
 ```
 
 ---
+# 🗨️ Dev Note
+This project is optimized for **local development** and rapid prototyping.  
+A web-hosted version exists **for experimentation purposes only** — it is **not intended for commercial use**.
 
-## ⚠️ Note for Deployment
-This project is optimized for local use.
-Environment variable support (.env) is not configured by default. If you wish to deploy publicly or securely manage credentials, feel free to implement your own enhancements.
+> ⚠️ Environment variable support (`.env`) is **not configured by default**. If you're planning deployment, consider using`dotenv` or any other custom secrets manager  
+> If you plan to deploy this publicly or manage credentials securely, you're encouraged to implement your own enhancements.
 
-Pull requests and suggestions are welcome — tone critiques are not.
+Pull requests and feature suggestions are welcome — **tone critiques are not**.
 
 ---
 
-## 📌 Final Thoughts
+## 📌 Final Comment
 Vistatia is a preparation companion — not a replacement for your research, critical thinking, or public speaking skills. It won’t carry you through every unmoderated crisis or save you from a curveball Press Conference. But it will help you walk into committee feeling more prepared, confident, and in control.
 
 Use it wisely. Build your skills. Be ready.
 
 —
-Developed with care (and caffeine),
+Developed with care [(and caffeine)](https://github.com/Discobotdevlolhehe/Vistatia/blob/main/README%5Bfckboi%5D.md),
 by a fellow delegate who knows the struggle all too well.

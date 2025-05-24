@@ -1,4 +1,4 @@
-# MUN AI  
+# Vistatia  
 Made entirely with **coffee, 3AM breakdowns**, and emotional damage from my ex.  
 - If you understand what half of this code does.. please touch some grass, or maybe a girl [if you can you compsci major] -- or whatever gets you to leave that  blue-light-emitting screen.  
 ---
@@ -7,7 +7,7 @@ Made entirely with **coffee, 3AM breakdowns**, and emotional damage from my ex.
 
 I’ve seen way too many newcomers freeze, flop, or full-on **panic shit** during a GSL. And let’s be real — MUN chairs are less forgiving than my ex during a text fight.
 
-So I made **MUN AI**:  
+So I made **Vistatia** [formerly mun ai]:  
 Your very own (reluctantly helpful) MUN assistant to stop you from becoming public speaking roadkill. Whether it’s **general, crisis, or some hybrid hellspawn**, this thing’s got you *kinda* covered.
 
 ---
@@ -72,11 +72,8 @@ If you’re really that desperate like your situationship? then:
 - React.js
 - Node.js
 
-<<<<<<< HEAD:README
-=======
-<br>
+### Procedure:
 
->>>>>>> 01813172c75d4b98a09fd004616f0ede377d60bf:README[fckboi].md
 1. Download or clone it  
 2. Open the backend Folder  
 3. Get **~6 Mistral API keys** (use small model — they’re free).  
@@ -96,17 +93,27 @@ Repeat it for every `index.js`
 
 ---
 
-#### Side note:  
-This is meant strictly for **local deployments** — that’s why I didn’t bother making a dedicated `.env` file, just like your father who didn't bother on coming back with the milk he left for 15 years ago.  
-If you wanna be fancy and set one up for public deployment? Go ahead and do it. I won’t stop you, but maybe the license will ;) jkjk. (> or maybe..)
+#### Side note:
 
-Pull requests, suggestions critiques, feedbacks? Sure.<br>
-**just dont chase me on my tone. That will forever be Non-Negotiable**
+This was meant strictly for **local deployments** — that’s why I didn’t bother making a dedicated `.env` file.  
+Just like your father who didn’t bother coming back with the milk he left for 15 years ago.
+
+If you wanna be fancy and set one up for public deployment? Go ahead. I won’t stop you.  
+But maybe the license will 😉 jkjk (or maybe... 👀)
+
+Also, don’t come chasing me for slapping this onto a Vercel app.  
+**Yes, it exists — so you know what you’re getting.**  
+**No, it’s not for commercial use like your ex.**  
+If it crashes? Just know Vercel decided to be a bitch and start playing hard to get.
+
+Pull requests, suggestions, critiques, feedback? Absolutely.  
+**But don’t come for my tone. That will forever be Non-Negotiable.**
+
 
 ---
 
 ### 🗨️ Dev's Note  
-- ⚠️ Most MUN's don’t even let you use phones, let alone AI tools or the internet. This is a preparation weapon, not your secret in-committee cheat device. But if you *do* sneak it in, Be my guest, I'm not the one to blame, I warned ya
+- ⚠️ Most MUN's don’t even let you use phones [unless its a urgent call or smth], let alone AI tools or the internet. This is a preparation weapon, not your secret in-committee cheat device. But if you *do* sneak it in, Be my guest, I'm not the one to blame, I warned ya
 
 Please, for the love of all committees, don’t fully rely on this. It won’t save your ass in Press Conferences, moderated hellfires, or if someone drops a historical crisis in your lap, or the worst one... The executive board.
 
