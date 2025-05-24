@@ -8,6 +8,8 @@ const a4 = require("./AI/Rebuttal/index");
 const a5 = require("./AI/Speech/index");
 const a6 = require("./AI/POI-POO-ROP/index");
 const a7 = require("./AI/Guide/index");
+const a8 = require("./AI/Amendment/index")
+const a9 = require("./AI/Draft-resolution/index")
 const fs = require("fs")
 
 
@@ -37,7 +39,7 @@ z.use(x.json()); // trust me bro, we parse JSON
 z.use(y()); // CORS cause security theater
 
 z.post("/generate", async (r, s) => {
-    const { userId: u, task: v, prompt: w } = r.body || {};
+    const { userId: u, task: v, prompt: w, amendmentPrompt: ap } = r.body || {};
 
     if (!u || !v || !w) {
         // 🤡 forgot to fill the damn form
@@ -75,6 +77,12 @@ z.post("/generate", async (r, s) => {
                 break;
             case "guide":
                 out = await a7.generateGuide(u, w);
+                break;
+            case "amendment":
+                out = await a8.generateAmendments(u, w, ap)
+                break;
+            case "draft":
+                out = await a9.generateDrafts(u, w)
                 break;
             default:
                 // zero braincells detected

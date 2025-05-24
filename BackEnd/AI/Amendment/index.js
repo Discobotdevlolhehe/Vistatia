@@ -17,19 +17,21 @@ function yeetMemory(brain) {
 
 const SYSTEM_THOUGHTS = fz.readFileSync(pp.join(__dirname, "system_prompt.txt"), "utf-8");
 
-async function generateAssessment(user, prompt) {
+async function generateAmendments(user, prompt, amendmentPrompt) {
   let mind = suckMemory();
 
   // sanity check or what's left of it
   if (!mind[user]) {
-    mind[user] = { assessments: [] };
-  } else if (!Array.isArray(mind[user].assessments)) {
-    mind[user].assessments = [];
+    mind[user] = { amendments: [] };
+  } else if (!Array.isArray(mind[user].amendments)) {
+    mind[user].amendments = [];
   }
+
+  const fullPrompt = `${prompt}\n\nAmendments:\n${amendmentPrompt}`;
 
   const chatBlob = [
     { role: "system", content: SYSTEM_THOUGHTS },
-    { role: "user", content: prompt }
+    { role: "user", content: fullPrompt }
   ];
 
   let res;
@@ -63,7 +65,7 @@ async function generateAssessment(user, prompt) {
     res.data.choices[0].message.content
   ) || "[blank stare]";
 
-  mind[user].assessments.push({ prompt: prompt, assessment: txt });
+  mind[user].amendments.push({ prompt: prompt, amendments: txt });
   yeetMemory(mind);
 
   return txt;
@@ -71,5 +73,5 @@ async function generateAssessment(user, prompt) {
 
 // vomit it out into commonJS void
 module.exports = {
-  generateAssessment: generateAssessment
+  generateAmendments: generateAmendments
 };

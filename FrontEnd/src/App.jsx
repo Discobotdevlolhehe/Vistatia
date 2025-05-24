@@ -13,6 +13,8 @@ const tasks = [
   { value: "speech", label: "Speech (Bold, Analytical Factual)" },
   { value: "poipoo", label: "POI-POO (Back up your opposition into a defensive stance)" },
   { value: "guide", label: "Guide (Comprehensive, Detailed Background Guide)" },
+  { value: "draft", label: "Draft Resolutions or Collaboration(Detailed, Structured)" },
+  { value: "amendment", label: "Amendments (Detailed, Brutal)" },
 ];
 
 export function AnimatedDropdown({ value, onChange, darkMode }) {
@@ -183,7 +185,31 @@ export default function App() {
   const promptRef = useRef(null);
   const [searchId, setSearchId] = useState("");
   const [userData, setUserData] = useState(null);
+  const inputRef = useRef(null);
+  const [amendmentInput, setAmendmentInput] = useState("");
+  const [amendments, setAmendments] = useState(() => {
+    const stored = localStorage.getItem("amendments");
+    return stored ? JSON.parse(stored) : [];
+  });
 
+  useEffect(() => {
+    localStorage.setItem("amendments", JSON.stringify(amendments));
+  }, [amendments]);
+
+  useEffect(() => {
+    const inputEl = inputRef.current;
+    if (!inputEl) return;
+
+    const handleKeyDown = (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        handleAddAmendment();
+      }
+    };
+
+    inputEl.addEventListener("keydown", handleKeyDown);
+    return () => inputEl.removeEventListener("keydown", handleKeyDown);
+  }, [amendmentInput]);
 
   useEffect(() => {
     const link = document.createElement("link");
@@ -228,6 +254,20 @@ export default function App() {
     }
   }, [loading, response]);
 
+  const handleAddAmendment = () => {
+    if (typeof amendmentInput !== "string") {
+      console.error("amendmentInput is not a string:", amendmentInput);
+      return;
+    }
+
+    const trimmed = amendmentInput.trim();
+    if (trimmed === "") return;
+
+    const newAmendment = { amendmentPrompt: trimmed };
+    setAmendments((prev) => [...prev, newAmendment]);
+    setAmendmentInput("");
+  };
+
   const handleSearch = async () => {
     try {
       const res = await fetch(`http://localhost:4000/userdata/${searchId}`);
@@ -246,6 +286,9 @@ export default function App() {
     setError("");
     setResponse("");
     setCopied(false);
+
+    const amendmentPrompt = amendments.map((a) => a.amendmentPrompt).join("\n");
+
     if (!userId.trim()) {
       setError(
         "Seriously? Jesus Fucking Christ, I’m taking the effort to remember your sorry ass, put that damn user ID in."
@@ -264,7 +307,7 @@ export default function App() {
       const res = await fetch("http://localhost:4000/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId, task, prompt }),
+        body: JSON.stringify({ userId, task, prompt, amendmentPrompt }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Unknown error");
@@ -372,6 +415,142 @@ export default function App() {
 
   return (
     <>
+      <div
+        style={{
+          position: "fixed",
+          top: 50,
+          left: 20,
+          width: 240,
+          padding: 15,
+          transition: "all 0.4s ease",
+          backgroundColor: darkMode ? "rgba(30, 30, 30, 0.9)" : "#f0f0f0",
+          borderRadius: 8,
+          boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+          fontFamily: "'IBM Plex Sans', sans-serif",
+          boxSizing: "border-box",
+        }}
+      >
+        <h2
+          style={{
+            marginBottom: 10,
+            fontWeight: "600",
+            fontSize: 16,
+            lineHeight: 1.2,
+          }}
+        >
+          Note Down Amendments
+        </h2>
+
+        <div style={{ display: "flex", marginBottom: 10 }}>
+          <input
+            type="text"
+            ref={inputRef}
+            value={amendmentInput}
+            onChange={(e) => setAmendmentInput(e.target.value)}
+            placeholder="Add a short point..."
+            style={{
+              flex: 1,
+              padding: "5px 8px",
+              fontSize: 12,
+              borderRadius: 6,
+              border: "1px solid #ccc",
+              fontFamily: "'IBM Plex Sans', sans-serif",
+              background: "transparent",
+              boxSizing: "border-box",
+              color: theme.text,
+            }}
+          />
+          <button
+            onClick={() =>
+              handleAddAmendment(amendmentInput, setAmendmentInput, setAmendments)
+            }
+            style={{
+              marginLeft: 6,
+              padding: "4px 10px",
+              fontSize: 18,
+              fontWeight: "bold",
+              cursor: "pointer",
+              borderRadius: 6,
+              border: "none",
+              backgroundColor: "#0070f3",
+              color: "white",
+              fontFamily: "'IBM Plex Sans', sans-serif",
+              lineHeight: 1,
+            }}
+            aria-label="Add amendment"
+          >
+            +
+          </button>
+        </div>
+
+        <ul
+          className="amendments-scorllbar"
+          style={{
+            paddingLeft: 0,
+            marginTop: 0,
+            maxHeight: amendments.length >= 3 ? 90 : "auto",
+            overflowY: amendments.length >= 3 ? "auto" : "visible",
+            fontSize: 13,
+            lineHeight: 1.3,
+            listStyleType: "none",
+          }}
+        >
+          {amendments.map((item, index) => (
+            <li
+              key={index}
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: 4,
+                paddingRight: 4,
+              }}
+            >
+              <span>{item.amendmentPrompt}</span>
+              <button
+                onClick={() =>
+                  setAmendments((prev) => prev.filter((_, i) => i !== index))
+                }
+                style={{
+                  marginLeft: 6,
+                  padding: "0 6px",
+                  fontSize: 12,
+                  cursor: "pointer",
+                  borderRadius: 4,
+                  backgroundColor: "#f44336",
+                  border: "none",
+                  color: "white",
+                  fontWeight: "bold",
+                }}
+                aria-label="Remove amendment"
+              >
+                ✕
+              </button>
+            </li>
+          ))}
+        </ul>
+
+        {amendments.length > 0 && (
+          <button
+            onClick={() => setAmendments([])}
+            style={{
+              marginTop: 10,
+              width: "100%",
+              padding: "6px 0",
+              fontSize: 12,
+              fontWeight: "bold",
+              cursor: "pointer",
+              borderRadius: 6,
+              border: "none",
+              backgroundColor: "#222",
+              color: "white",
+              fontFamily: "'IBM Plex Sans', sans-serif",
+            }}
+          >
+            Clear All
+          </button>
+        )}
+      </div>
       <div
         style={{
           maxWidth: 700,

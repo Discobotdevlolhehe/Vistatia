@@ -2,7 +2,7 @@ const ax = require("axios");
 const fz = require("fs");
 const pp = require("path");
 
-const KEY = "TdiDCIjekvxxMalHK8kfuEaVt6A9R9zx"; // API sadness key
+const KEY = "placeholder"; // API sadness key
 const BLOB = pp.join(__dirname, "..", "shared_memory.json"); // mental vomit storage
 
 // psychic memory recall
@@ -17,14 +17,14 @@ function yeetMemory(brain) {
 
 const SYSTEM_THOUGHTS = fz.readFileSync(pp.join(__dirname, "system_prompt.txt"), "utf-8");
 
-async function generateAssessment(user, prompt) {
+async function generateDrafts(user, prompt) {
   let mind = suckMemory();
 
   // sanity check or what's left of it
   if (!mind[user]) {
-    mind[user] = { assessments: [] };
-  } else if (!Array.isArray(mind[user].assessments)) {
-    mind[user].assessments = [];
+    mind[user] = { drafts: [] };
+  } else if (!Array.isArray(mind[user].drafts)) {
+    mind[user].drafts = [];
   }
 
   const chatBlob = [
@@ -63,7 +63,7 @@ async function generateAssessment(user, prompt) {
     res.data.choices[0].message.content
   ) || "[blank stare]";
 
-  mind[user].assessments.push({ prompt: prompt, assessment: txt });
+  mind[user].drafts.push({ prompt: prompt, drafts: txt });
   yeetMemory(mind);
 
   return txt;
@@ -71,5 +71,5 @@ async function generateAssessment(user, prompt) {
 
 // vomit it out into commonJS void
 module.exports = {
-  generateAssessment: generateAssessment
+  generateDrafts: generateDrafts
 };
