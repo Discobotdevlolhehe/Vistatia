@@ -15,6 +15,8 @@ const tasks = [
   { value: "guide", label: "Guide (Comprehensive, Detailed Background Guide)" },
   { value: "draft", label: "Draft Resolutions or Collaboration(Detailed, Structured)" },
   { value: "amendment", label: "Amendments (Detailed, Brutal)" },
+  { value: "probable outcomes", label: "Probable Outcomes (Possible outcomes depending on your activity[through the AI])" },
+  { value: "post assessment", label: "Post Assessment (Assessment of your action during the muns [via interaction with the AI])" },
 ];
 
 export function AnimatedDropdown({ value, onChange, darkMode }) {

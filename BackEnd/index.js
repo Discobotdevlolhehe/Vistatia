@@ -10,6 +10,8 @@ const a6 = require("./AI/POI-POO-ROP/index");
 const a7 = require("./AI/Guide/index");
 const a8 = require("./AI/Amendment/index")
 const a9 = require("./AI/Draft-resolution/index")
+const a10 = require("./AI/PostAssessment/index");
+const a11 = require("./AI/ProbableOutcomes/index")
 const fs = require("fs")
 
 
@@ -43,7 +45,7 @@ z.post("/generate", async (r, s) => {
 
     if (!u || !v || !w) {
         // 🤡 forgot to fill the damn form
-        return s.status(400).json({ error: "Missing userId, task or prompt. Bro what is this incomplete nonsense." });
+        return s.status(400).json({ error: "Missing userId, task or prompt or amendments. Bro what is this incomplete nonsense." });
     }
 
     f(u); // initialize the state disaster
@@ -83,6 +85,12 @@ z.post("/generate", async (r, s) => {
                 break;
             case "draft":
                 out = await a9.generateDrafts(u, w)
+                break;
+            case "post assessment":
+                out = await a10.generatePostAssessment(u, w)
+                break;
+            case "probable outcomes":
+                out = await a11.generateProbableOutcomess(u, w)
                 break;
             default:
                 // zero braincells detected
