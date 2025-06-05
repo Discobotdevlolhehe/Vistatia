@@ -121,8 +121,23 @@ Vistatia is a preparation companion — not a replacement for your research, cri
 Use it wisely. Build your skills. Be ready.
 
 —
+
 Developed with care [(and caffeine)](https://github.com/Discobotdevlolhehe/Vistatia/blob/main/README%5Bfckboi%5D.md),
 by a fellow delegate who knows the struggle all too well.
 
+
+--
+
+# ❕❕ Point to Remember [PTR]:
+## Important Note
+
+This repository contains the **full and functional version** of the system, but the codebase is intentionally kept in an unstructured ("spaghetti") form.
+
+A clean, modular, and better-organized version of this same system exists, but it is private to prevent logic replication or unauthorized commercial use.
+
+If you'd like to contribute seriously (e.g. via pull requests, restructuring, or commercial inquiry), feel free to reach out. Access to the clean codebase can be provided on a case-by-case basis.
+
 --
 This porject is licensed under a modified MIT License. See the [license](./LICENSE) for more details
+
+
