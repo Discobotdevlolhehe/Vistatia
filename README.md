@@ -80,7 +80,7 @@ This tool is intended for preparation purposes only. It does not:
 
 2. Navigate to the backend folder.
 
-3. Obtain ~6 Mistral API keys (free for small models) from console.mistral.ai
+3. Obtain ~6 Mistral API keys (free for small models) from [here](https://console.mistral.ai)
 
 4. In each AI subfolder, open index.js and replace this:
 ```js
@@ -123,3 +123,6 @@ Use it wisely. Build your skills. Be ready.
 —
 Developed with care [(and caffeine)](https://github.com/Discobotdevlolhehe/Vistatia/blob/main/README%5Bfckboi%5D.md),
 by a fellow delegate who knows the struggle all too well.
+
+--
+This porject is licensed under a modified MIT License. See the [license](./LICENSE) for more details
